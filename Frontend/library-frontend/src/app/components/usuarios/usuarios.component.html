@@ -1,0 +1,76 @@
+<div class="card">
+  <h2>Usuarios</h2>
+
+    <div class="search-bar">
+    <input class="search"
+           [(ngModel)]="searchUsuarios"
+           (input)="filtrarUsuarios()"
+           placeholder="🔍 Buscar por usuario, libro o fecha...">
+  </div>
+
+
+  <!-- FORM CREAR -->
+   <div *ngIf="errorMsg" class="error">
+  {{ errorMsg }}
+</div>
+  <div class="form">
+    <input [(ngModel)]="nuevoUsuario.nombre" placeholder="Nombre">
+    <input [(ngModel)]="nuevoUsuario.email" placeholder="Email">
+    <input [(ngModel)]="nuevoUsuario.telefono" placeholder="Teléfono">
+
+    <button (click)="create()">Crear usuario</button>
+  </div>
+
+  <hr>
+
+  <!-- LISTA -->
+  <div class="list">
+
+    <div class="item" *ngFor="let u of usuariosFiltrados">
+
+      <!-- INFO NORMAL -->
+      <div class="info" *ngIf="!editando || editando.id !== u.id">
+        <strong>{{u.nombre}}</strong>
+        <span>{{u.email}}</span>
+        <span>{{u.telefono}}</span>
+      </div>
+
+      <!-- EDIT INLINE (SOLO CUANDO ESTÁ EDITANDO) -->
+      <div class="edit-inline" *ngIf="editando && editando.id === u.id">
+        <input [(ngModel)]="editando.nombre">
+        <input [(ngModel)]="editando.email">
+        <input [(ngModel)]="editando.telefono">
+      </div>
+
+      <!-- ACCIONES -->
+      <div class="actions">
+
+        <!-- BOTÓN EDITAR -->
+        <button *ngIf="!editando || editando.id !== u.id"
+                (click)="startEdit(u)">
+          Editar
+        </button>
+
+        <!-- BOTÓN GUARDAR -->
+        <button *ngIf="editando && editando.id === u.id"
+                (click)="update()">
+          Guardar
+        </button>
+
+        <!-- BOTÓN CANCELAR -->
+        <button *ngIf="editando && editando.id === u.id"
+                (click)="editando = null">
+          Cancelar
+        </button>
+
+        <!-- ELIMINAR -->
+        <button class="danger" (click)="delete(u.id)">
+          Eliminar
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+</div>

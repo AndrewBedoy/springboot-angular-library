@@ -1,0 +1,57 @@
+<div class="card">
+  <h2>📖 Préstamos</h2>
+
+  <!-- 🔍 BÚSQUEDA PRINCIPAL -->
+  <div class="search-bar">
+    <input class="search"
+           [(ngModel)]="searchPrestamo"
+           (input)="filtrarPrestamos()"
+           placeholder="🔍 Buscar por usuario, libro o fecha...">
+  </div>
+
+  <!-- 🧩 FORM CREAR PRÉSTAMO -->
+  <div class="form compact">
+
+    <div class="field">
+      <input [(ngModel)]="searchUsuario"
+             (input)="filtrarUsuarios()"
+             placeholder="Buscar usuario">
+    </div>
+
+    <div class="field">
+      <input [(ngModel)]="searchLibro"
+             (input)="filtrarLibros()"
+             placeholder="Buscar libro">
+    </div>
+
+    <button (click)="prestar()">➕ Prestar</button>
+  </div>
+
+  <!-- 📋 LISTA -->
+  <div class="list">
+
+    <div class="item" *ngFor="let p of prestamosFiltrados">
+
+      <div class="info">
+        <strong>👤 {{p.usuario?.nombre}}</strong>
+        <span> → 📚 {{p.libro?.titulo}}</span>
+        <p class="date">📅 {{p.fechaPrestamo}}</p>
+      </div>
+
+      <div class="actions">
+
+        <button *ngIf="!p.fechaDevolucion"
+                (click)="devolver(p.id)">
+          ✔ Devolver
+        </button>
+
+        <span *ngIf="p.fechaDevolucion" class="returned">
+          Devuelto: {{p.fechaDevolucion}}
+        </span>
+
+      </div>
+
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,76 @@
+<div class="card">
+  <h2>Libros</h2>
+
+
+    <!-- 🔍 BÚSQUEDA PRINCIPAL -->
+  <div class="search-bar">
+    <input class="search"
+           [(ngModel)]="searchLibros"
+           (input)="filtrarLibros()"
+           placeholder="🔍 Buscar por usuario, libro o fecha...">
+  </div>
+
+  <!-- FORM CREAR (igual que antes) -->
+   <div *ngIf="errorMsg" class="error">
+  {{ errorMsg }}
+</div>
+  <div class="form">
+    <input [(ngModel)]="nuevoLibro.titulo" placeholder="Título">
+    <input [(ngModel)]="nuevoLibro.genero" placeholder="Género">
+    <input [(ngModel)]="nuevoLibro.anioPublicacion" placeholder="Año">
+
+    <h3>Autor</h3>
+
+    <input [(ngModel)]="nuevoAutor.nombre" placeholder="Nombre">
+    <input [(ngModel)]="nuevoAutor.nacionalidad" placeholder="Nacionalidad">
+    <input [(ngModel)]="nuevoAutor.fechaNacimiento" type="date">
+
+    <button (click)="create()">Crear Libro</button>
+  </div>
+
+  <hr>
+
+  <!-- LISTA CON EDICIÓN INLINE -->
+  <div class="list">
+
+    <div class="item" *ngFor="let l of librosFiltrados">
+
+      <!-- MODO NORMAL -->
+      <div *ngIf="editando?.id !== l.id" class="info">
+        {{l.titulo}} - {{l.genero}} - {{l.anioPublicacion}} - {{l.autor?.nombre}}
+      </div>
+
+      <!-- MODO EDICIÓN -->
+      <div *ngIf="editando?.id === l.id" class="edit-inline">
+        <input [(ngModel)]="editando.titulo">
+        <input [(ngModel)]="editando.genero">
+        <input [(ngModel)]="editando.anioPublicacion">
+      </div>
+
+      <!-- BOTONES -->
+      <div class="actions">
+
+        <button *ngIf="editando?.id !== l.id"
+                (click)="startEdit(l)">
+          Editar
+        </button>
+
+        <button *ngIf="editando?.id === l.id"
+                (click)="update()">
+          Guardar
+        </button>
+
+        <button *ngIf="editando?.id === l.id"
+                (click)="editando = null">
+          Cancelar
+        </button>
+
+        <button class="danger" (click)="delete(l.id)">
+          Eliminar
+        </button>
+
+      </div>
+
+    </div>
+  </div>
+</div>
