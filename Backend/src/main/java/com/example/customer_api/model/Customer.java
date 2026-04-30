@@ -1,0 +1,27 @@
+package com.example.customer_api.model;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
+
+
+@Entity
+public class Customer {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @NotBlank
+    private String name;
+
+    @Email
+    @NotBlank
+    private String email;
+
+    public Long getId() { return id; }
+
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
+
+    public String getEmail() { return email; }
+    public void setEmail(String email) { this.email = email; }
+}
