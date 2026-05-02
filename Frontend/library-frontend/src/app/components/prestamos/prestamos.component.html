@@ -12,16 +12,42 @@
   <!-- 🧩 FORM CREAR PRÉSTAMO -->
   <div class="form compact">
 
+    <!-- USUARIO -->
     <div class="field">
       <input [(ngModel)]="searchUsuario"
              (input)="filtrarUsuarios()"
              placeholder="Buscar usuario">
+
+      <!-- 🔽 SUGERENCIAS -->
+      <ul class="dropdown" *ngIf="usuariosFiltrados.length > 0">
+        <li *ngFor="let u of usuariosFiltrados"
+            (click)="seleccionarUsuario(u)">
+          {{u.nombre}}
+        </li>
+      </ul>
+
+      <small *ngIf="usuarioSeleccionado">
+        Seleccionado: {{usuarioSeleccionado.nombre}}
+      </small>
     </div>
 
+    <!-- LIBRO -->
     <div class="field">
       <input [(ngModel)]="searchLibro"
              (input)="filtrarLibros()"
              placeholder="Buscar libro">
+
+      <!-- 🔽 SUGERENCIAS -->
+      <ul class="dropdown" *ngIf="librosFiltrados.length > 0">
+        <li *ngFor="let l of librosFiltrados"
+            (click)="seleccionarLibro(l)">
+          {{l.titulo}}
+        </li>
+      </ul>
+
+      <small *ngIf="libroSeleccionado">
+        Seleccionado: {{libroSeleccionado.titulo}}
+      </small>
     </div>
 
     <button (click)="prestar()">➕ Prestar</button>
